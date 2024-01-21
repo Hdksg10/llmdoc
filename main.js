@@ -54,14 +54,6 @@ function generateCode(prompt, llmPath, callback){
   child.stdout.on('data', (data) => {
     output += data.toString()
   });
-  // child.stderr.on('data', (data) => {
-  //   console.log(`stderr: ${data}`);
-  //   dialog.showMessageBoxSync(mainWindow, {
-  //     type: 'info',
-  //     title: 'Error',
-  //     message: `生成代码时产生错误: ${data}`,
-  //   });
-  // });
   child.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     console.log(output)
@@ -89,7 +81,7 @@ async function handleGetText(_, text) {
         preload: path.join(__dirname, 'preload_loading.js'),
       }
       })
-    child.loadFile('loading.html')
+    child.loadFile(path.join(__dirname, 'htmls', 'loading.html'))
     child.once('ready-to-show', () => {
       let wid = child.id
       child.webContents.send('loading-info', {"wid": wid})
@@ -191,7 +183,7 @@ function handleEditBookmark(_, fpath, bm) {
         preload: path.join(__dirname, 'preload_bookmark.js'),
       }})
     bookmark["win"] = child.id
-    child.loadFile('bookmark.html')
+    child.loadFile(path.join(__dirname, 'htmls', 'bookmark.html'))
     child.once('ready-to-show', () => {
       child.webContents.send('bookmark-info', bookmark)
       child.show()
@@ -241,7 +233,7 @@ const createWindow = () => {
       }
   })
 
-  win.loadFile('index.html')
+  win.loadFile(path.join(__dirname, 'htmls', 'index.html'))
   mainWindow = win
 }
 
@@ -264,9 +256,9 @@ app.whenReady().then(() => {
   ipcMain.on('close-window', handleCloseWindow);
 
   app.on('activate', () => {
-    // if (BrowserWindow.getAllWindows().length === 0) {
-    //   createWindow()
-    // }
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
   })
 
 })

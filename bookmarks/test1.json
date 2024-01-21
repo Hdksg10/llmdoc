@@ -1,1 +1,1 @@
-{"name":"test1","code":"\ndef func(doc_path, save_path):\n    # Open the document\n    doc = Document(doc_path)\n\n    # Change all words to uppercase\n    doc.revisions[0].content = doc.revisions[0].content.upper()\n\n    # Save the document\n    doc.save(save_path)\n\n\n"}
+{"name":"test1","code":"\ndef func(doc_path, save_path):\n    # Open the documen\n    doc = Document(doc_path)\n\n    # Change all words to uppercase\n    doc.revisions[0].content = doc.revisions[0].content.upper()\n\n    # Save the document\n    doc.save(save_path)\n\n\n"}
