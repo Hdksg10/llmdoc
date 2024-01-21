@@ -13,10 +13,6 @@
     "electron": "^28.1.4"
   },
   "dependencies": {
-    "@electron/remote": "^2.1.1",
-    "docx-preview": "^0.3.0",
-    "fs": "^0.0.1-security",
-    "libreoffice-convert": "^1.5.1",
     "mammoth": "^1.6.0"
   }
 }
