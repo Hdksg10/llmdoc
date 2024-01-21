@@ -1,6 +1,110 @@
-print("""
-```python
-def func(input_docx, output_docx):
-    print("hello, world!") 
-```
-""")
+#
+# Copyright 2016 The BigDL Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# -*- coding: utf-8 -*-
+import torch
+import time
+import argparse
+import numpy as np
+
+from bigdl.llm.transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer
+
+# you could tune the prompt based on your own model
+QWEN_PROMPT_FORMAT = """
+    <|im_start|>system
+    You are a helpful assistant.
+    <|im_end|>
+    <|im_start|>user
+    {prompt}
+    <|im_end|>
+    <|im_start|>assistant
+"""
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Predict Tokens using `generate()` API for Qwen model')
+    parser.add_argument('--repo-id-or-model-path', type=str, default="C:/Users/Administrator/Downloads/qwen7b-chat",
+                        help='The huggingface repo id for the Qwen model to be downloaded'
+                             ', or the path to the huggingface checkpoint folder')
+    parser.add_argument('prompt', type=str, default="AI是什么？",
+                        help='Prompt to infer')
+    parser.add_argument('--n-predict', type=int, default=1024,
+                        help='Max tokens to predict')
+
+    args = parser.parse_args()
+    model_path = args.repo_id_or_model_path
+
+    # Load model in 4 bit,
+    # which convert the relevant layers in the model into INT4 format
+    model = AutoModelForCausalLM.from_pretrained(model_path,
+                                                 load_in_4bit=True,
+                                                 trust_remote_code=True)
+
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(model_path,
+                                              trust_remote_code=True)
+    
+    # Generate predicted tokens
+    with torch.inference_mode():
+        full_prompt = """
+        Here is an example Python code for manipulating docx documents:
+        def replace_text(doc, old_text, new_text):
+            # Iterate through each paragraph
+            for p in doc.paragraphs:
+                # If the text to be replaced is in this paragraph
+                if old_text in p.text:
+                    # Use runs to replace the content without changing the style
+                    # Note: runs separate content based on style, ensure consistent style for replaced content
+                    for run in p.runs:
+                        if old_text in run.text:
+                            run.text = run.text.replace(old_text, new_text)
+        Please, based on your knowledge and the example above, write a code example for following task. In the code example you write next, the functional code should be within a 
+        function named func(). The function should take parameters doc_path for the input document path and save_path for the saved document path. Make sure your example function's name is func().
+        Please help me write the Python code example for the following operations on a docx document: {prompt}, and then save the document to save_path. Please respond in English, and output the code within a markdown-formatted code block.
+        Make sure your example function's name is func(). Make sure your example function's name is func().
+        """
+        prompt = full_prompt.format(prompt=args.prompt)
+        prompt = QWEN_PROMPT_FORMAT.format(prompt=prompt)
+        input_ids = tokenizer.encode(prompt, return_tensors="pt")
+        st = time.time()
+        output = model.generate(input_ids,
+                                max_new_tokens=args.n_predict,
+                                use_cache=True)
+        end = time.time()
+        output_str = tokenizer.decode(output[0], skip_special_tokens=True)
+        # print(f'Inference time: {end-st} s')
+        # print('-'*20, 'Prompt', '-'*20)
+        # print(prompt)
+        print('-'*20, 'Output', '-'*20)
+        print(output_str)
+
+        # input_prompt = args.prompt
+        # prompt = QWEN_PROMPT_FORMAT.format(prompt=input_prompt)
+        # input_ids = tokenizer.encode(prompt, return_tensors="pt")
+        # st = time.time()
+        # # if your selected model is capable of utilizing previous key/value attentions
+        # # to enhance decoding speed, but has `"use_cache": false` in its model config,
+        # # it is important to set `use_cache=True` explicitly in the `generate` function
+        # # to obtain optimal performance with BigDL-LLM INT4 optimizations
+        # output = model.generate(input_ids,
+        #                         max_new_tokens=args.n_predict,
+        #                         use_cache=True)
+        # end = time.time()
+        # output_str = tokenizer.decode(output[0], skip_special_tokens=True)
+        # print(f'Inference time: {end-st} s')
+        # print('-'*20, 'Prompt', '-'*20)
+        # print(prompt)
+        # print('-'*20, 'Output', '-'*20)
+        # print(output_str)

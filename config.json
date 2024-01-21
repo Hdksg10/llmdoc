@@ -1,4 +1,5 @@
 {
-    "pythonPath": "C:/Users/wu/anaconda3/python.exe",
-    "llmPath": "C:/Users/wu/anaconda3/envs/llm/python.exe"
+    "pythonPath": "C:/ProgramData/anaconda3/envs/llm/python.exe",
+    "llmPath": "C:/ProgramData/anaconda3/envs/llm/python.exe",
+    "modelPath": "C:/Users/Administrator/Downloads/qwen7b-chat"
 }

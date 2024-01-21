@@ -20,7 +20,7 @@ function runBookmark(fpath, docx) {
   const scriptPath = path.join(__dirname, '~temp.py')
   const templatePath = path.join(__dirname, 'scripts/template.py')
   const template = fs.readFileSync(templatePath, 'utf8')
-  let fullCode = code + template
+  let fullCode = "from docx import Document" + code + template
   fs.writeFileSync(scriptPath, fullCode)
   // run the script
   // save the output to the same directory as the docx file
@@ -48,20 +48,20 @@ function runBookmark(fpath, docx) {
 function generateCode(prompt, llmPath, callback){
   const llmScript = path.join(__dirname, 'scripts/llm.py')
   const cmdArgs = [llmScript, prompt]
-  const child = spawn.spawn(llmPath, cmdArgs)
+  const child = spawn.spawn(llmPath, cmdArgs, {stdio: ['pipe', 'pipe', 'pipe'], encoding: 'utf-8'})
   let generate_code = ""
   let output = ""
   child.stdout.on('data', (data) => {
     output += data.toString()
   });
-  child.stderr.on('data', (data) => {
-    console.log(`stderr: ${data}`);
-    dialog.showMessageBoxSync(mainWindow, {
-      type: 'info',
-      title: 'Error',
-      message: `生成代码时产生错误: ${data}`,
-    });
-  });
+  // child.stderr.on('data', (data) => {
+  //   console.log(`stderr: ${data}`);
+  //   dialog.showMessageBoxSync(mainWindow, {
+  //     type: 'info',
+  //     title: 'Error',
+  //     message: `生成代码时产生错误: ${data}`,
+  //   });
+  // });
   child.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     console.log(output)

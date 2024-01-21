@@ -1,0 +1,1 @@
+{"name":"test2","code":"\ndef func(doc_path, save_path):\n    # Read the input document\n    doc = Document(doc_path)\n\n    # Convert all text to uppercase\n    for para in doc.paragraphs:\n        for run in para.runs:\n            run.text = run.text.upper()\n\n    # Save the modified document\n    doc.save(save_path)\n"}

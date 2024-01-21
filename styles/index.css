@@ -82,6 +82,7 @@
     height: 30px;
   }
   #bookmark-bar-title {
+    width: 50px;
     font-size: 20px;
     margin-left: 0%;
     font-weight: bold;
