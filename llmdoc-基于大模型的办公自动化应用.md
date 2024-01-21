@@ -2,10 +2,9 @@
 
 - 学号：10215501411
 - 姓名：吴冕志
-
-- Github地址：[Hdksg10/llmdoc at master (github.com)](https://github.com/Hdksg10/llmdoc/tree/master)
-
+- 源代码/Github仓库地址：[Hdksg10/llmdoc at master (github.com)](https://github.com/Hdksg10/llmdoc/tree/master)
 - B站演示视频：【[llmdoc] 云计算期末作业演示】 https://www.bilibili.com/video/BV1F64y1P7zk/
+- 作品访问方式：见下节
 ## 安装与运行
 
 由于时间有限，我没有成功将应用程序打包成可执行文件进行分发，不过可以从源码运行应用。
@@ -14,10 +13,10 @@
 
 ```
 cnpm install --save-dev electron
-npm install mammoth
+cnpm install mammoth
 ```
 
-安装python环境（推荐conda）
+安装python环境（推荐conda），建议python版本为3.9
 
 ```
 pip install bigdl-llm[all] # install bigdl-llm with 'all' option
