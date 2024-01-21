@@ -1,4 +1,4 @@
-// script.js
+// extract.js
 
 function extractText() {
     var textarea = document.getElementById("input-text");

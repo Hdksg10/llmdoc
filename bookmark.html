@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入页面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .input-container {
+      margin-bottom: 10px;
+      text-align: left;
+      display: flex;
+    }
+
+    .button-container {
+      display: flex;
+      position: relative;
+      left: 8%;
+      justify-content: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    #name {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      height: 35px;
+      width: 200px;
+      box-sizing: border-box;
+    }
+
+    #code {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+      height: 250px;
+      box-sizing: border-box;
+      resize: none;
+    }
+
+    button {
+      padding: 5px 5px;
+      margin-top: 0px;
+      border: 1px solid #686868;
+      background-color: #dddcdc;
+      color: rgb(0, 0, 0);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 80px;
+      margin-top: 10px;
+    }
+    #save {
+      margin-right: 10px;
+    }
+    #run {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <script src="./scripts/bookmark_edit.js"></script>
+  <div class="container">
+    <div class="input-container">
+      <label for="name">名称：</label>
+      <input type="text" id="name" disabled>
+    </div>
+    
+    <div class="input-container">
+      <label for="code">代码：</label>
+      <textarea id="code"></textarea>
+    </div>
+    <div class="button-container">
+      <button id="save">完成</button>
+      <button id="run">执行</button>
+    </div>
+  </div>
+
+</body>
+</html>

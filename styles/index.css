@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  .main-container {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+    margin: 0;
+  }
+  
+  .collapsible-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .collapsible-item {
+    margin-bottom: 10px;
+    transition: margin 0.3s;
+  }
+  
+  .item-header {
+    cursor: pointer;
+    .icon {
+      transition: all 0.3s;
+    }
+  }
+  
+  .sub-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: none;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s;
+  }
+  
+  .sub-list li {
+    margin-bottom: 5px;
+  }
+  
+  .collapsible-item.open {
+    margin-bottom: 15px; /* 调整展开时的外边距，使得动画效果更明显 */
+  }
+  
+  #main-window {
+    display: flex;
+    flex-direction: column;
+    flex: 10;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  #bookmark-section {
+    flex: 1;
+    width: 210px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  #bookmark-bar {
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+    align-items: center;
+  }
+  #bookmark-bar-arrow {
+    width: 30px;
+    margin-left: 0%;
+    padding-left: 0%;
+    height: 30px;
+  }
+  #bookmark-bar-title {
+    font-size: 20px;
+    margin-left: 0%;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  #bookmark-list {
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #doc-section {
+    flex: 6;
+    padding: 10px;
+  }
+  
+  #input-section {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+  }
+  
+  #input-text {
+    flex: 1;
+    padding: 10px;
+    resize: none;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+  }
+  #input-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0;
+    height: 50px;
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 4px;
+    .icon {
+      width: 30px;
+      height: 30px;
+      fill: #606060;
+      transition: transform 0.5s;
+    }
+  }
+  
+  #input-button:hover {
+    background-color: rgba(163, 163, 163, 0.2);
+    .icon {
+      transform: scale(1.2);
+      fill: rgb(3, 137, 48);
+    }
+  }
+  
+  #docx-container {
+    overflow: auto;
+    margin-top: 10px;
+  }
+  
+  .bookmark-item {
+    width: 100px;
+    height: 30px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    cursor: pointer;
+    border-radius: 7px;
+  }
